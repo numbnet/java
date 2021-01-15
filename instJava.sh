@@ -2,7 +2,7 @@
 
 ##===========================================
 ## Java в termux
-
+# wget https://raw.githubusercontent.com/numbnet/java/master/instJava.sh
 ##===========================================
 InstallPKG() {
 apt update && apt upgrade
