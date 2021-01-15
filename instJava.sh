@@ -28,6 +28,6 @@ done
 ## Start install
 InstallPKG;
 git clone https://github.com/numbnet/java.git;
-# cp $HOME/java/openjdk/java $PREFIX/bin;
+cp $HOME/java/openjdk/java $PREFIX/bin;
 chmod +x $HOME/java/openjdk/bin/java;
 sh installjava;
