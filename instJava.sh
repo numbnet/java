@@ -28,43 +28,44 @@ done
 };
 
 ##===========================================
-LoadJDK{
-print_status() {
-    printf "[*] ${1}...\n"
-}
 
-set_arch() {
-    case "$(uname -m)" in
-        aarch64|armv8l)
-            ARCH=aarch64
-            ;;
-        armv7l|arm)
-            ARCH=arm
-            ;;
-        *)
-            printf "[!] arch not supported yet\n"
-            exit 1
-            ;;
-    esac
-}
+LoadJDK() {
+	print_status() {
+		printf "[*] ${1}...\n"
+	}
 
-get_tar() {
-    wget -c https://github.com/numbnet/java/releases/download/v8/jdk8_${ARCH}.tar.gz -O jdk8_$ARCH.tar.gz
-    tar -xf jdk8_$ARCH.tar.gz -C $PREFIX/share 
-    chmod +x $PREFIX/share/bin/*
-    mv $PREFIX/share/bin/* $PREFIX/bin
-}
+	set_arch() {
+		case "$(uname -m)" in
+			aarch64|armv8l)
+				ARCH=aarch64
+				;;
+			armv7l|arm)
+				ARCH=arm
+				;;
+			*)
+				printf "[!] arch not supported yet\n"
+				exit 1
+				;;
+		esac
+	}
 
-cleanup() {
-    rm -f jdk8_${ARCH}.tar.gz
-    rm -rf $PREFIX/share/bin
-}
+	get_tar() {
+		wget -c https://github.com/numbnet/java/releases/download/v8/jdk8_${ARCH}.tar.gz -O jdk8_$ARCH.tar.gz
+		tar -xf jdk8_$ARCH.tar.gz -C $PREFIX/share 
+		chmod +x $PREFIX/share/bin/*
+		mv $PREFIX/share/bin/* $PREFIX/bin
+	}
 
-print_status "getting system info"
-set_arch
-print_status "getting tar file and setting all things"
-get_tar
-print_status "cleaning up"
+	cleanup() {
+		rm -f jdk8_${ARCH}.tar.gz
+		rm -rf $PREFIX/share/bin
+	}
+
+	print_status "getting system info"
+	set_arch
+	print_status "getting tar file and setting all things"
+	get_tar
+	print_status "cleaning up"
 }
 
 
@@ -74,4 +75,9 @@ InstallPKG;
 git clone https://github.com/numbnet/java.git;
 cp $HOME/java/openjdk/java $PREFIX/bin;
 chmod +x $HOME/java/openjdk/bin/java;
-sh installjava;
+chmod +x $PREFIX/bin/java;
+
+## sh installjava;
+LoadJDK;
+exit
+
